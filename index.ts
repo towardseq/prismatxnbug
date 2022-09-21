@@ -12,7 +12,7 @@ export const startPrismaTransaction = (timeToSleep: number) => {
   // @ts-ignore
   return prisma.$transaction(async (txClient) => {
     await sleep(timeToSleep);
-    return await txClient.user.create({ data: { email: 'test' } });
+    return await txClient.user.create({ data: { email: `${Math.random()*100}` } });
   });
 }
 
