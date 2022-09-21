@@ -38,24 +38,26 @@ it('Local', async () => {
 
 });
 
-it.only('Using helper', async () => {
+it('Using helper', async () => {
   const prismaTx = getTxClient();
 
   const txClient1 = await prismaTx.$begin();
   txClient1.txId = 1234
-  console.log(await txClient1.user.count());
 
   const txClient2 = await prismaTx.$begin();
+  console.log(await txClient1.user.count());
+
   console.log(`TX2 start with txid: ${txClient2.txId}`)
   await txClient1.user.create({ data: { name: 'foo bardoe' } });
   await txClient1.$commit();
-  console.log('tx2 committing')
+  console.log('tx1 committing')
 
   console.log(await txClient2.user.findMany({ where: { name: 'foo' } }));
-  console.log('tx1 finish');
+  console.log('tx2 finish');
+  await txClient2.$commit();
 })
 
-it('Importing', async () => {
+it.skip('Importing', async () => {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -67,7 +69,7 @@ it('Importing', async () => {
 });
 
 
-it('failure with helper', async () => {
+it.skip('failure with helper', async () => {
   const prismaTx = getTxClient();
   // @ts-ignore
   const tx1 = prismaTx.$transaction(async txClient1 => {
@@ -86,7 +88,7 @@ it('failure with helper', async () => {
 }
 )
 
-it('Allows two tx clients to work independently', async () => {
+it.skip('Allows two tx clients to work independently', async () => {
   const prismaTx = getTxClient();
 
   const transactionClient1 = await prismaTx.$begin();
