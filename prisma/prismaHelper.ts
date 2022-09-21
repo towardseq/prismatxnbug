@@ -53,7 +53,7 @@ export async function $begin(client: PrismaClient) {
 }
 
 // patches the prisma client with a $begin method
-const client = new PrismaClient();
+const client = new PrismaClient({log: ['query', 'info']});
 
 export function getTxClient() {
   return Object.assign(client, {
