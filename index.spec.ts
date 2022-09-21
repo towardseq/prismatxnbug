@@ -6,18 +6,20 @@ it('Local', async () => {
   function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-
+  
   // @ts-ignore
-  const tx = await prismaTx.$transaction(async txClient => {
+  const tx1 = prismaTx.$transaction(async txClient1 => {
     await sleep(1000);
+    await txClient1.user.count();
     console.log('tx1 finish');
   });
 
-  const tx2 = await prismaTx.$transaction(async txClient => {
-    await txClient.user.count();
-    console.log('tx2 finish');
+  // @ts-ignore
+  const tx2 = prismaTx.$transaction(async txClient2 => {
+    throw new Error('foo')
   });
 
+  await Promise.all([tx1, tx2])
 });
 
 it('Importing', async () => {
