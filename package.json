@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Zach Goldberg <zach@equi.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "DATABASE_URL=postgresql://johndoe:randompassword@localhost:5433/mydb?schema=public jest"
+  },
   "dependencies": {
     "@prisma/client": "^4.3.1",
     "express": "^4.18.1",
