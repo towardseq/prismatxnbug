@@ -6,21 +6,21 @@ services:
     image: postgres:13.7
     restart: always
     build:
-      dockerfile: ./Dockerfile
+#      dockerfile: ./Dockerfile
       target: db
     environment:
-      POSTGRES_USER: equi
-      POSTGRES_PASSWORD: equi123
-      POSTGRES_DB: equi
+      POSTGRES_USER: johndoe
+      POSTGRES_PASSWORD: randompassword
+      POSTGRES_DB: mydb
     volumes:
       - ./database/init:/docker-entrypoint-initdb.d:Z
       - ./database/psqldb:/var/lib/postgresql
 
     healthcheck:
-      test: [ 'CMD', 'pg_isready', '-U', 'equi', '-d', 'equi' ]
+      test: [ 'CMD', 'pg_isready', '-U', 'johndoe', '-d', 'mydb' ]
       interval: 2s
       timeout: 3s
       retries: 5
       start_period: 1s
     ports:
-      - '5432:5432'
+      - '5433:5432'
