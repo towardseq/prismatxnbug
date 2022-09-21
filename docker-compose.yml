@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: local_psql
+    image: postgres:13.7
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+      target: db
+    environment:
+      POSTGRES_USER: equi
+      POSTGRES_PASSWORD: equi123
+      POSTGRES_DB: equi
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d:Z
+      - ./database/psqldb:/var/lib/postgresql
+
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', '-U', 'equi', '-d', 'equi' ]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+      start_period: 1s
+    ports:
+      - '5432:5432'

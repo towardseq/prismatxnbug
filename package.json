@@ -1,0 +1,10 @@
+{
+  "name": "prismatest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Zach Goldberg <zach@equi.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.3.1"
+  }
+}
